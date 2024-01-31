@@ -1,15 +1,15 @@
 # Write your MySQL query statement below
- select name as Department,Employee,salary as Salary from
-(SELECT departmentId ,name as Employee,salary
+SELECT Department ,Employee,salary as Salary
 FROM (
     SELECT 
-        departmentId,name,
+        d.name as Department,e.name as Employee,
         salary,
         DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) as rn
     FROM 
-        Employee
+        Employee e
+    join Department d on e.departmentId=d.id   
 ) as ranked
 WHERE rn <= 3
-ORDER BY departmentId, salary DESC)tmp
-join Department d on departmentId=d.id
 ;
+
+
